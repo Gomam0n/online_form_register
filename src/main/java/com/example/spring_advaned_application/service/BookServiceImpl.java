@@ -2,7 +2,7 @@ package com.example.spring_advaned_application.service;
 
 import com.example.spring_advaned_application.domain.Book;
 import com.example.spring_advaned_application.domain.BookRepository;
-import com.example.spring_advaned_application.exception.BookNotFoundExCeption;
+import com.example.spring_advaned_application.exception.BookNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
@@ -19,7 +19,7 @@ public class BookServiceImpl implements  BookService{
         Optional<Book> book= bookRepository.findById(id);
         if(book.isEmpty()){
             System.out.println("xxxxxxxxxxxxxxxxxxxxxxxxxx");
-            throw new BookNotFoundExCeption("The book does not exist");
+            throw new BookNotFoundException("The book does not exist");
         }
         return book.get();
         //return bookRepository.findById(id).get();

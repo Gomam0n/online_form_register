@@ -1,14 +1,21 @@
 package com.example.spring_advaned_application.dto;
 
 import com.example.spring_advaned_application.domain.Book;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import org.hibernate.validator.constraints.Length;
 import org.springframework.beans.BeanUtils;
 
 import static util.CustomBeanUtils.getNullPropertyNames;
 
 public class BookDTO {
+    @NotBlank
     private String author;
+    @Length(max=50)
     private String description;
+    @NotBlank
     private String name;
+    @NotNull
     private Integer status;
 
     public BookDTO() {
@@ -48,6 +55,9 @@ public class BookDTO {
     public void convertToBook(Book book){
         new BookConvert().convert(this, book);
     }
+    public Book convertToBook(){
+        return new BookConvert().convert(this);
+    }
     private class BookConvert implements Convert<BookDTO, Book>{
         @Override
         public Book convert(BookDTO bookDTO, Book book) {
@@ -58,7 +68,9 @@ public class BookDTO {
 
         @Override
         public Book convert(BookDTO bookDTO) {
-            return null;
+            Book book = new Book();
+            BeanUtils.copyProperties(bookDTO, book);
+            return book;
         }
     }
 }
