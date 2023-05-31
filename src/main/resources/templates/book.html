@@ -2,27 +2,18 @@
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <title>Login</title>
+    <title>Book</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../static/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}">
 </head>
-<body>
+<body th:object="${book}">
 <div class="container" style="max-width: 600px; margin-top: 50px">
-    <h3 class="page-header">Login</h3>
+    <h3 class="page-header">Register</h3>
     <div class="well">
-        <form action="#" method="post">
-            <div class="form-group">
-                <label for="usernameId">Username</label>
-                <input type="text" name="username" id="usernameId" class="form-control">
-            </div>
-            <div class="form-group">
-                <label for="passwordId">Password</label>
-                <input type="text" name="password" id="passwordId" class="form-control">
-            </div>
-            <p class="text-center">
-                <button type="submit" class="btn btn-primary">Login</button>
-            </p>
-        </form>
+        <p><strong>Name of Book</strong> <span th:text="*{name}"> </span></p>
+        <p><strong>Author</strong> <span th:text="*{author}"> </span></p>
+        <p><strong>Description</strong> <span th:text="*{description}"> </span></p>
+        <p><strong>Status</strong> <span th:text="*{status}"> </span></p>
     </div>
 
 

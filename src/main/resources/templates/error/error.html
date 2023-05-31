@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<!--xmlns:th="http://www.w3.org/1999/xhtml"-->
+
+<head>
+<meta charset="UTF-8">
+<title>Error</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="../../static/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}">
+
+</head>
+<body>
+<div class="container" style="max-width: 600px;margin-top: 50px">
+  <div class="jumbotron">
+      <h2>Error</h2>
+      <p>Permission Denied</p>
+
+
+  </div>
+
+    <div th:utext="'&lt;!--'" th:remove="tag"></div>
+  <div th:utext="'Failed Request URL : ' + ${url}" th:remove="tag"></div>
+  <div th:utext="'Exception message : ' +${exception}" th:remove="tag"></div>
+    <pre>
+    <span th:each="stackTraceElement : ${stackTrace}" th:remove="tag">
+        <span th:utext="${stackTraceElement}" th:remove="tag"></span>
+    </span>
+    </pre>
+    <div th:utext="'--&gt;'" th:remove="tag"></div>
+
+</div>
+</body>
+</html>
