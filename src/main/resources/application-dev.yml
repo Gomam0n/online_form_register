@@ -1,0 +1,12 @@
+logging:
+  level:
+    root: debug
+    com.qyf: debug
+  file:
+    name: log/my.log
+    # path: devlog
+
+
+server:
+  error:
+    include-stacktrace: always

@@ -10,13 +10,8 @@ spring:
     hibernate:
       ddl-auto: update
     show-sql: true
-
-logging:
-  level:
-    root: info
-    com.qyf: debug
-  file:
-    name: log/my.log
+  profiles:
+    active: dev
 
 server:
   error:
