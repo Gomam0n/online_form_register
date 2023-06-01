@@ -5,6 +5,8 @@ import com.example.spring_advaned_application.exception.InvalidRequestException;
 import com.example.spring_advaned_application.resource.ErrorResource;
 import com.example.spring_advaned_application.resource.FieldResource;
 import com.example.spring_advaned_application.resource.InvalidErrorResource;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,11 +20,15 @@ import java.util.List;
 
 @RestControllerAdvice
 public class ApiExceptionHandler {
+
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
     @ExceptionHandler(BookNotFoundException.class)
     @ResponseBody
     public ResponseEntity<?> handleNotFound(RuntimeException e){
         ErrorResource errorResource = new ErrorResource(e.getMessage());
-        return new ResponseEntity<Object>(errorResource, HttpStatus.NOT_FOUND);
+        ResponseEntity result = new ResponseEntity<Object>(errorResource, HttpStatus.NOT_FOUND);
+        logger.warn("Return ------ {}", result);
+        return result;
     }
 
     @ExceptionHandler(InvalidRequestException.class)
@@ -38,12 +44,15 @@ public class ApiExceptionHandler {
             fieldResources.add(fieldResource);
         }
         InvalidErrorResource ier = new InvalidErrorResource(e.getMessage(), fieldResources);
-        return new ResponseEntity<Object>(ier, HttpStatus.BAD_REQUEST);
+        ResponseEntity result = new ResponseEntity<Object>(ier, HttpStatus.BAD_REQUEST);
+        logger.warn("Return ------ {}", result);
+        return result;
     }
 
     @ExceptionHandler(Exception.class)
     @ResponseBody
     public ResponseEntity<?> handleException(Exception e){
+        logger.error("Error ---- {}", e.getMessage());
         return new ResponseEntity<Object>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }

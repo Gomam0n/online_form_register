@@ -1,10 +1,11 @@
 logging:
   level:
-    root: debug
+    root: info
     com.qyf: debug
   file:
     name: log/my.log
     # path: devlog
+  # config: classpath:logback-test.xml
 
 
 server:

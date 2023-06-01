@@ -4,6 +4,7 @@ import com.example.spring_advaned_application.domain.UserRepository;
 import com.example.spring_advaned_application.domain.Users;
 import com.example.spring_advaned_application.form.UserForm;
 import com.example.spring_advaned_application.form.UserFormConvert;
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.apache.catalina.User;
 import org.springframework.beans.BeanUtils;
@@ -17,14 +18,21 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.servlet.http.HttpServletRequest;
-import java.util.List;
+import jakarta.servlet.http.Cookie;
+
+import jakarta.servlet.http.HttpServletResponse;
 
 @Controller
 public class LoginController {
 
     @Autowired
     private UserRepository userRepository;
+
+    @GetMapping("/")
+    public String index(){
+        return "index";
+    }
+
     @GetMapping("/register")
     public String register(Model model){
         model.addAttribute("userForm", new UserForm());
@@ -32,6 +40,26 @@ public class LoginController {
     }
     @GetMapping("/login")
     public String loginPage(){
+        return "login";
+    }
+
+    @PostMapping("/login")
+    public String loginPost(
+            @RequestParam String username,
+            @RequestParam String password,
+            HttpSession session){
+        Users user = userRepository.findByUsernameAndPassword(username, password);
+        if(user != null){
+            System.out.println("login successfully");
+            session.setAttribute("user", user);
+            return "index";
+        }
+        System.out.println("login failed");
+        return "login";
+    }
+    @GetMapping("/logout")
+    public String logout(HttpSession session){
+        session.removeAttribute("user");
         return "login";
     }
     @PostMapping("/register")
