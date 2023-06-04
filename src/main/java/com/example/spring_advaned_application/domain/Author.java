@@ -1,9 +1,6 @@
 package com.example.spring_advaned_application.domain;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 import java.util.Date;
 
@@ -16,6 +13,9 @@ public class Author {
     private String phone;
     private Date signDate;
 
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE}, optional = false, fetch = FetchType.LAZY)
+    @JoinColumn(name = "author_wallet_id")
+    private Wallet wallet;
     public Author() {
     }
 
@@ -49,5 +49,13 @@ public class Author {
 
     public void setSignDate(Date signDate) {
         this.signDate = signDate;
+    }
+
+    public Wallet getWallet() {
+        return wallet;
+    }
+
+    public void setWallet(Wallet wallet) {
+        this.wallet = wallet;
     }
 }
